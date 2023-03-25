@@ -1,12 +1,23 @@
 <script setup lang='ts'>
-
+type args = { gridNum: number }
 class Game {
-    constructor({ gridNum }) {
+    gridNum: number;
+    gridSum: number;
+    randomShowI: number;
+    arr: never[];
+    trim: number | undefined;
+    isKeyUp: boolean;
+    isStop: boolean;
+    keyCode: number;
+    V: number;
+    addV: number;
+    isStrict: boolean;
+    constructor({ gridNum }: args) {
         this.gridNum = gridNum;
         this.gridSum = gridNum * gridNum;
         this.randomShowI = Math.round(Math.random() * this.gridSum);
         this.arr = [];
-        this.trim = null;
+        this.trim = undefined;
         this.isKeyUp = false;
         this.isStop = false;
         this.keyCode = 37 + Math.floor(Math.random() * 4);
@@ -20,7 +31,7 @@ class Game {
         let body = document.querySelector('#snakes');
         let ul = document.createElement('ul');
         let num = this.gridSum;
-        let trim2 = null;
+        let trim2 = undefined;
         ul.id = 'ul';
         while (num-- > 0) { ul.append(document.createElement('li')) }
         body.innerHTML = ' <h2 id="h2">长度: <span>1</span> ,速度: <i>1</i></h2>';
@@ -144,11 +155,11 @@ class Game {
         };
 
     }
-    addClass(i, c = 'on') {
+    addClass(i: number, c = 'on') {
         let d = document.querySelectorAll('#ul>li');
         c.trim().split(/\s+/).forEach((m) => { d[i].classList.add(m) })
     }
-    removeClass(i, c = 'on') {
+    removeClass(i: number | undefined, c = 'on') {
         document.querySelectorAll('#ul>li')[i].classList.remove(c)
     }
 

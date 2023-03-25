@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { start, done } from '@/utils/NProgress';
 
-const layout = () => import('@V/layout/layout.vue')
+const layout = () => import('@V/layout/layout.vue') //仅限用于routes一级子路由
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +28,6 @@ const router = createRouter({
       meta: {
         title: 'Vue基础',
         icon: 'Reading',
-        layoutId: '/vueBase', // 同 path,仅限用于routes一级子路由
       },
       children: [
         {
@@ -84,13 +83,44 @@ const router = createRouter({
       }
     },
     {
+      path: '/baGuWen',
+      redirect: '/baGuWen/vue',
+      component: layout,
+      meta: {
+        title: '八股文',
+        icon: 'Folder',
+      },
+      children: [
+        {
+          path: 'vue',
+          component: () => import('@V/baGuWen/VUE.vue'),
+          meta: {
+            title: 'Vue',
+          }
+        },
+        {
+          path: 'JS',
+          component: () => import('@V/baGuWen/JS.vue'),
+          meta: {
+            title: 'JS',
+          }
+        },
+        {
+          path: 'CSS',
+          component: () => import('@V/baGuWen/CSS.vue'),
+          meta: {
+            title: 'CSS',
+          }
+        },
+      ]
+    },
+    {
       path: '/item',
       redirect: '/item/m1',
       component: layout,
       meta: {
         title: '功能展示',
         icon: 'Folder',
-        layoutId: '/item', // 同 path,仅限用于routes一级子路由
       },
       children: [
         {
