@@ -1,11 +1,15 @@
 <script setup lang='ts'>
-import { reactive, ref, onBeforeMount, onMounted } from 'vue'
 
 </script>
 
 <template>
     <div>
-        css
+        <div class="_title">css</div>
+        <div class="_text"></div>
+        <hr>
+        <div class="_title"></div>
+        <div class="_text"></div>
+        <hr>
     </div>
 </template>
 
