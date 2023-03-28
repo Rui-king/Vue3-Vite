@@ -38,61 +38,61 @@
         <div class="_title">防抖和节流</div>
         <div class="_text">
             <pre>
-          /** 防抖函数
-          * @param fn 事件触发的操作
-          * @param delay 多少毫秒内连续触发事件，不会执行
-          * @returns {Function}
-          */
-          function debounce(fn, delay = 500) {
-              let timer = null; //通过闭包缓存了一个定时器
-              return function () {
-                  const args = [...arguments];
-                  const that = this
-                  timer && clearTimeout(timer);
-                  timer = setTimeout(function () {
-                      fn.apply(that, args);
-                  }, delay);
-              }
-          }
+                              /** 防抖函数
+                              * @param fn 事件触发的操作
+                              * @param delay 多少毫秒内连续触发事件，不会执行
+                              * @returns {Function}
+                              */
+                              function debounce(fn, delay = 500) {
+                                  let timer = null; //通过闭包缓存了一个定时器
+                                  return function () {
+                                      const args = [...arguments];
+                                      const that = this
+                                      timer && clearTimeout(timer);
+                                      timer = setTimeout(function () {
+                                          fn.apply(that, args);
+                                      }, delay);
+                                  }
+                              }
 
-          /**
-          * 节流函数
-          * @param fn 事件触发的操作
-          * @param delay 间隔多少毫秒需要触发一次事件
-          * @returns {Function}
-          */
-          function throttle(fn, delay = 500) {
-              let flag = true;
-              return function () {
-                  if (!flag) return;
-                  const that = this
-                  const args = [...arguments];
-                  flag = false;
-                  setTimeout(() => {
-                      fn.apply(that, args);
-                      flag = true;
-                  }, delay);
-              }
-          }
-                      </pre>
+                              /**
+                              * 节流函数
+                              * @param fn 事件触发的操作
+                              * @param delay 间隔多少毫秒需要触发一次事件
+                              * @returns {Function}
+                              */
+                              function throttle(fn, delay = 500) {
+                                  let flag = true;
+                                  return function () {
+                                      if (!flag) return;
+                                      const that = this
+                                      const args = [...arguments];
+                                      flag = false;
+                                      setTimeout(() => {
+                                          fn.apply(that, args);
+                                          flag = true;
+                                      }, delay);
+                                  }
+                              }
+                                          </pre>
         </div>
         <hr>
         <div class="_title">js如何判断一个变量是数组？</div>
         <div class="_text">
             <pre>
-          // ES6中增加的数组方法
-          Array.isArray()
+                              // ES6中增加的数组方法
+                              Array.isArray()
                 
-          // 方法借用
-          function isType(arr) {
-              return Object.prototype.toString.call(arr).slice(8, -1);
-          }
+                              // 方法借用
+                              function isType(arr) {
+                                  return Object.prototype.toString.call(arr).slice(8, -1);
+                              }
     
-          // 用instanceof判断
-          function isArray(arr) {
-              return arr instanceof Array;
-          }
-                  </pre>
+                              // 用instanceof判断
+                              function isArray(arr) {
+                                  return arr instanceof Array;
+                              }
+                                      </pre>
         </div>
         <hr>
         <div class="_title">如何理解闭包，为什么有这种特性？为什么需要闭包？闭包的缺点？</div>
@@ -134,47 +134,47 @@
         <div class="_title">写出代码的执行结果</div>
         <div class="_text">
             <pre>
-     题目  
-     function Foo() {
-       getName = function () {
-         console.log(1)
-       }
-       console.log('this is ' + this)
-       return this
-     }
+                         题目  
+                         function Foo() {
+                           getName = function () {
+                             console.log(1)
+                           }
+                           console.log('this is ' + this)
+                           return this
+                         }
 
 
-     Foo.getName = function () {
-       console.log(2)
-     }
-     Foo.prototype.getName = function () {
-       console.log(3)
-     }
-     var getName = function () {
-       console.log(4)
-     }
-     function getName () {
-       console.log(5)
-     }
+                         Foo.getName = function () {
+                           console.log(2)
+                         }
+                         Foo.prototype.getName = function () {
+                           console.log(3)
+                         }
+                         var getName = function () {
+                           console.log(4)
+                         }
+                         function getName () {
+                           console.log(5)
+                         }
 
 
-     Foo.getName();
-     getName();
-     Foo().getName();
-     getName();
-     new Foo.getName();
-     new Foo().getName();
-     new new Foo().getName();
+                         Foo.getName();
+                         getName();
+                         Foo().getName();
+                         getName();
+                         new Foo.getName();
+                         new Foo().getName();
+                         new new Foo().getName();
 
-     结果：
-     Foo.getName(); // 2
-     getName(); // 4
-     Foo().getName(); // this is [object Window], 1
-     getName();  // 1
-     new Foo.getName(); // 2
-     new Foo().getName(); // this is [object Object], 3
-     new new Foo().getName(); // this is [object Object], 3
-     </pre>
+                         结果：
+                         Foo.getName(); // 2
+                         getName(); // 4
+                         Foo().getName(); // this is [object Window], 1
+                         getName();  // 1
+                         new Foo.getName(); // 2
+                         new Foo().getName(); // this is [object Object], 3
+                         new new Foo().getName(); // this is [object Object], 3
+                         </pre>
             <br>
             整段代码分为声明和执行两部分。 <br>
 
@@ -205,33 +205,33 @@
         <div class="_title">写出代码的执行结果</div>
         <div class="_text">
             <pre>
-        window.name = 'ByteDance';
-        function A () {
-          this.name = 123;
-        }
-        A.prototype.getA = function(){
-          console.log(this);
-          return this.name + 1;
-        }
-        let a = new A();
-        let funcA = a.getA;
-        funcA(); //this = window; return 'ByteDance1'
-                                                                                                                                </pre>
+                            window.name = 'ByteDance';
+                            function A () {
+                              this.name = 123;
+                            }
+                            A.prototype.getA = function(){
+                              console.log(this);
+                              return this.name + 1;
+                            }
+                            let a = new A();
+                            let funcA = a.getA;
+                            funcA(); //this = window; return 'ByteDance1'
+                                                                                                                                                    </pre>
         </div>
         <hr>
         <div class="_title">说出代码的执行结果？如果只改最后一行怎么让它也能输出aaa？</div>
         <div class="_text">
             <pre>
-        var obj = { 
-          name: 'aaa',
-          getName: function() {
-              console.log(this.name);
-          }
-        }
-        var get = obj.getName;
-        obj.getName();
-        get();
-                                                                                                            </pre>
+                            var obj = { 
+                              name: 'aaa',
+                              getName: function() {
+                                  console.log(this.name);
+                              }
+                            }
+                            var get = obj.getName;
+                            obj.getName();
+                            get();
+                                                                                                                                </pre>
             参考答案 <br>
             obj.getName() 通过obj调用，因此getName内部this指向obj，所以打印'aaa'。<br>
 
@@ -243,18 +243,18 @@
         <div class="_title">写出代码的执行结果</div>
         <div class="_text">
             <pre>
-        var name = 'win';
-        const obj = {
-            name: 'obj',
-            a: () => {
-                console.log(this.name);
-            }
-        };
-        const obj1 = {
-            name: 'obj1'
-        };
-        obj.a.call(obj1);
-                                                                                        </pre>
+                            var name = 'win';
+                            const obj = {
+                                name: 'obj',
+                                a: () => {
+                                    console.log(this.name);
+                                }
+                            };
+                            const obj1 = {
+                                name: 'obj1'
+                            };
+                            obj.a.call(obj1);
+                                                                                                            </pre>
             参考答案 <br>
             结果是打印'win'。<br>
 
@@ -321,6 +321,20 @@
 
             重绘不一定导致重排，重排一定导致重绘。
         </div>
+        <hr>
+        <div class="_title">js的函数有哪几种调用形式？</div>
+        <div class="_text">
+            fn(); <br>
+            obj.fn();<br>
+            new Fn();<br>
+            fn.call() / apply();<br>
+            (function () { })();<br>
+            eval('fn()');<br>
+            let a = new Function('', 'fn()');
+        </div>
+        <hr>
+        <div class="_title"></div>
+        <div class="_text"></div>
         <hr>
         <div class="_title"></div>
         <div class="_text"></div>

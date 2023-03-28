@@ -16,7 +16,7 @@ const rules = reactive({
     ],
     password: [
         { required: true, message: '请输入密码', trigger: 'blur' },
-        { min: 3, max: 18, message: '请输入10至18位密码', trigger: 'blur' },
+        { min: 3, max: 18, message: '请输入6至18位密码', trigger: 'blur' },
     ],
 });
 

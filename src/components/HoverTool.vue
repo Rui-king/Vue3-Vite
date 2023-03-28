@@ -17,8 +17,10 @@ const
     }),
     clickOffset = { x: 0, y: 0 },
     $router = useRouter(),
+    $route = useRoute(),
     $routes = $router.options.routes;
 
+const list = $routes.filter((m) => m.meta?.addHoverBtn)
 
 // 点击展开收缩
 function clickToggleOpen() {
@@ -28,6 +30,7 @@ function clickToggleOpen() {
 
 // 点击跳转
 function clickToNewPage(path: string) {
+    if (path === '/login') localStorage.removeItem('token');
     $router.push(path)
 }
 // 鼠标移动开始移动元素
@@ -77,20 +80,22 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="tool_box" :style="`top:${curPosition.y}px;left: ${curPosition.x}px`">
+    <div class="tool_box" :style="`top:${curPosition.y}px;left: ${curPosition.x}px`" v-if="!$route.meta.hoverHide">
         <div class="clickBox" @mousedown="Mousedown" @click="clickToggleOpen"></div>
         <div class="top">
             <Menu />
         </div>
         <ul class="tool">
-            <li v-for="({ path, meta }, i) in $routes" :key="i" @click="clickToNewPage(path)" :title="<string>meta?.title"
-                :style="`
-                                                        top:${curPosition.y}px;
-                                                        left: ${curPosition.x}px;
-                                                        transition-duration:${(i + 2) * .1}s;
-                                                        transform: translateX(${(curPosition.x > windowSize.w - curPosition.x ? -1 : 1) * (isOpen ? (i + 1) * clickBoxSize * 1.2 : 0)}px);`">
-                <component :is="meta?.icon"></component>
-            </li>
+            <template v-for="({ path, meta }, i) in list" :key="i">
+                <li @click="clickToNewPage(path)" :title="<string>meta?.title"
+                    :style="`
+                        top:${curPosition.y}px;
+                        left: ${curPosition.x}px;
+                        transition-duration:${(i + 2) * .1}s;
+                        transform: translateX(${(curPosition.x > windowSize.w - curPosition.x ? -1 : 1) * (isOpen ? (i + 1) * clickBoxSize * 1.2 : 0)}px);`">
+                    <component :is="meta?.icon"></component>
+                </li>
+            </template>
         </ul>
     </div>
 </template>

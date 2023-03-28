@@ -6,8 +6,8 @@ const route = useRoute();
 // 侧边栏状态
 const isHide = ref(false)
 
-const url = route.path.match(/.*(?=\/)/)?.[0];
 // 获取侧边栏列表
+const url = route.path.match(/.*(?=\/)/)?.[0];
 const tabList = router.options.routes.find(m => m.path === url)?.children;
 // 点击切换
 const clickTab = (path: string) => router.push(url + '/' + path);

@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { start, done } from '@/utils/NProgress';
+import { $get } from '@/axios/index';
 
-const layout = () => import('@V/layout/layout.vue') //仅限用于routes一级子路由
+const layout = () => import('@V/layout/layout.vue') //仅限用于routes一级子路由(半屏)
+const layout2 = () => import('@V/layout/layout2.vue') //仅限用于routes一级子路由(全屏)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,7 +19,8 @@ const router = createRouter({
       meta: {
         title: '首页',
         icon: 'House',
-        isHomeHide: true, // true :不显示
+        isHomeHide: true, // 是否显示在首页
+        addHoverBtn: true, // 是否显示在悬浮球中
       }
     },
     {
@@ -26,7 +29,7 @@ const router = createRouter({
       redirect: '/vueBase/m1',
       component: layout,
       meta: {
-        title: 'Vue基础',
+        title: 'Vue',
         icon: 'Reading',
       },
       children: [
@@ -80,6 +83,7 @@ const router = createRouter({
       meta: {
         title: 'TS基础',
         icon: 'Folder',
+        isHomeHide: true,
       }
     },
     {
@@ -87,8 +91,9 @@ const router = createRouter({
       redirect: '/baGuWen/vue',
       component: layout,
       meta: {
-        title: '八股文',
+        title: 'WEB',
         icon: 'Folder',
+        addHoverBtn: true,
       },
       children: [
         {
@@ -102,7 +107,21 @@ const router = createRouter({
           path: 'JS',
           component: () => import('@V/baGuWen/JS.vue'),
           meta: {
-            title: 'JS',
+            title: 'JS 问答',
+          }
+        },
+        {
+          path: 'JS2',
+          component: () => import('@V/baGuWen/JS2.vue'),
+          meta: {
+            title: 'JS 练习',
+          }
+        },
+        {
+          path: 'SX',
+          component: () => import('@V/baGuWen/SX.vue'),
+          meta: {
+            title: '手写系列',
           }
         },
         {
@@ -119,7 +138,7 @@ const router = createRouter({
       redirect: '/item/m1',
       component: layout,
       meta: {
-        title: '功能展示',
+        title: '功能',
         icon: 'Folder',
       },
       children: [
@@ -154,20 +173,64 @@ const router = createRouter({
       ]
     },
     {
+      path: '/animation',
+      redirect: '/animation/m1',
+      component: layout2,
+      meta: {
+        title: '动画',
+        icon: 'SwitchButton',
+        addHoverBtn: true,
+      },
+      children: [
+        {
+          path: 'm1',
+          component: () => import('@V/animation/m1.vue'),
+          meta: {
+            title: '粒子运动',
+          }
+        },
+        {
+          path: 'm2',
+          component: () => import('@V/animation/m2.vue'),
+          meta: {
+            title: '粒子文字',
+          }
+        },
+        {
+          path: 'm3',
+          component: () => import('@V/animation/m3.vue'),
+          meta: {
+            title: '星空',
+          }
+        },
+        {
+          path: 'm4',
+          component: () => import('@V/animation/m4.vue'),
+          meta: {
+            title: '数字上浮',
+          }
+        },
+      ]
+
+    },
+    {
       path: '/Snakes',
       component: () => import('@V/Snakes/Snakes.vue'),
       meta: {
         title: '贪吃蛇',
         icon: 'Folder',
+        addHoverBtn: true,
       }
     },
     {
       path: '/login',
       component: () => import('@V/login/login.vue'),
       meta: {
-        title: '登录',
+        title: '退出登录',
         icon: 'SwitchButton',
         isHomeHide: true,
+        hoverHide: true,
+        addHoverBtn: true,
       }
     },
     {
@@ -187,15 +250,17 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   start();
   const token = localStorage.getItem('token');
-  if ((to.path === '/login' && !token) || token) return true;
-  return {
-    path: '/login',
-    query: {
-      to: to.fullPath
-    },
-    replace: true
+  if (to.path === '/login') return true;
+  if (!token) {
+    return {
+      path: '/login',
+      query: {
+        to: to.fullPath
+      },
+      replace: true
+    }
   }
-
+  $get('/isLogin')
 })
 
 router.afterEach((to, from) => {
