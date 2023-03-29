@@ -24,7 +24,7 @@ const mousemove = ({ clientX }: MouseEvent) => {
 onMounted(() => {
     window.addEventListener('mousemove', mousemove)
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
     window.removeEventListener('mousemove', mousemove)
 })
 </script>

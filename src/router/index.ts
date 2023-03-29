@@ -210,6 +210,20 @@ const router = createRouter({
             title: '数字上浮',
           }
         },
+        {
+          path: 'm5',
+          component: () => import('@V/animation/m5.vue'),
+          meta: {
+            title: '数字雨',
+          }
+        },
+        {
+          path: 'm6',
+          component: () => import('@V/animation/m6.vue'),
+          meta: {
+            title: '水滴雨',
+          }
+        },
       ]
 
     },
